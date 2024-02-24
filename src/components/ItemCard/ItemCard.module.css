@@ -3,3 +3,21 @@
     padding: 10px 20px;
     justify-content: space-between;
 }
+
+.itemCard:hover {
+    cursor: pointer;
+    background-color: #c6c8ca;
+    color: #fff;
+}
+
+.itemCard> :nth-child(1) {
+    flex: 0.6;
+}
+
+.itemCard> :nth-child(2) {
+    flex: 0.2;
+}
+
+.itemCard> :nth-child(3) {
+    flex: 0.2;
+}
