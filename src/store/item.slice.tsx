@@ -6,6 +6,7 @@ interface IValantisState {
     idsList: string[],
     itemList: IItem[],
     offset: number;
+    selectFilterKey: string;
     searchText: string;
     loading: boolean,
     error: string | null
@@ -15,22 +16,29 @@ const initialState: IValantisState = {
     idsList: [],
     itemList: [],
     offset: 0,
+    selectFilterKey: 'product',
     searchText: '',
     loading: false,
     error: null
 }
 
+const GET_PRODUCTS_IDS = 'get_ids'
+const GET_PRODUCT_ITEMS = 'get_items'
+const FILTER = 'filter'
+const PAGE_SIZE = 50
+
 export const getIds = createAsyncThunk(
     'getIds',
-    async (params: { newSearchText: string, offset: number }, { dispatch }) => {
+    async (params: { newSelectFilterKey: string, newSearchText: string, offset: number }, { dispatch }) => {
         const { newSearchText, offset } = params
         if (newSearchText.trim() === '') {
             const { data } = await $api.post('/', {
-                action: "get_ids",
-                params: { offset, limit: 50 }
+                action: GET_PRODUCTS_IDS,
+                params: { offset, limit: PAGE_SIZE }
             })
             await dispatch(getItems(data.result))
             dispatch(setOffset(offset))
+
             return data as { result: string[] }
         } else {
             dispatch(filter(params))
@@ -42,32 +50,37 @@ export const getItems = createAsyncThunk(
     'getItems',
     async (ids: string[]) => {
         const { data } = await $api.post('/', {
-            action: 'get_items',
+            action: GET_PRODUCT_ITEMS,
             params: { ids }
         })
+
         return data as { result: IItem[] }
     }
 )
 
 export const filter = createAsyncThunk(
     'filter',
-    async (params: { newSearchText: string, offset: number }, { dispatch }) => {
-        const { newSearchText, offset } = params
+    async (params: { newSelectFilterKey: string, newSearchText: string, offset: number }, { dispatch }) => {
+        const { newSelectFilterKey, newSearchText, offset } = params
+
         let apiParams
-        if (/[а-яА-ЯЁё]/.test(newSearchText)) {
+        if (newSelectFilterKey === 'product') {
             apiParams = { product: newSearchText }
-        } else if (/^[0-9]+$/.test(newSearchText)) {
+        } else if (newSelectFilterKey === 'price') {
             apiParams = { price: parseInt(newSearchText) }
         } else {
             apiParams = { brand: newSearchText }
         }
+
         const { data } = await $api.post('/', {
-            action: 'filter',
-            params: apiParams
+            action: FILTER,
+            params: { ...apiParams, offset, limit: PAGE_SIZE }
         })
+
         await dispatch(getItems(data.result))
         dispatch(setOffset(offset))
         dispatch(setSearchText(newSearchText))
+
         return data as { result: string[] }
     }
 )
@@ -81,6 +94,10 @@ export const itemSlice = createSlice({
         },
         setSearchText(state, action) {
             state.searchText = action.payload
+        },
+        clear(state) {
+            state.idsList = []
+            state.itemList = []
         }
     },
     extraReducers: builder => builder
@@ -112,7 +129,6 @@ export const itemSlice = createSlice({
                     return false;
                 });
             }
-            console.log(state.itemList)
         })
         .addCase(getItems.rejected, state => {
             state.loading = false
@@ -133,4 +149,4 @@ export const itemSlice = createSlice({
         })
 })
 
-export const { setOffset, setSearchText } = itemSlice.actions
+export const { setOffset, setSearchText, clear } = itemSlice.actions
