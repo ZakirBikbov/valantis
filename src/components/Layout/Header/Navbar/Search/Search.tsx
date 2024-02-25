@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../../store/store"
 import { getIds, setSearchText, setSelectFilterKey } from "../../../../../store/item.slice";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -16,25 +16,36 @@ const Search = () => {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        if (location.pathname === '/valantis/') {
+        dispatch(setSelectFilterKey(newSelectFilterKey))
+        dispatch(setSearchText(newSearchText))
+        if (location.pathname === '/valantis/items/') {
             dispatch(getIds({
                 newSelectFilterKey,
                 newSearchText,
                 offset: 0
             }))
         } else {
-            dispatch(setSelectFilterKey(newSelectFilterKey))
-            dispatch(setSearchText(newSearchText))
-            navigate('/valantis/')
+            navigate('/valantis/items/')
         }
     }
+
+    useEffect(() => {
+        if (location.pathname === '/valantis/') {
+            setNewSelectFilterKey('product')
+            setNewSearchText('')
+        }
+    }, [location.pathname])
 
     return (
         <form
             className={styles.form}
             onSubmit={e => handleSubmit(e)}
         >
-            <select className={styles.selectFilter} onChange={e => setNewSelectFilterKey(e.target.value)}>
+            <select
+                className={styles.selectFilter}
+                value={newSelectFilterKey}
+                onChange={e => setNewSelectFilterKey(e.target.value)}
+            >
                 <option value={'product'}>Название</option>
                 <option value={'brand'}>Брэнд</option>
                 <option value={'price'}>Цена</option>

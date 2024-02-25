@@ -1,18 +1,13 @@
-import { useNavigate } from "react-router-dom"
-import styles from "./Navbar.module.css"
+import { Link } from "react-router-dom"
 import Search from "./Search/Search"
-
+import styles from "./Navbar.module.css"
 
 const Navbar = () => {
-
-    const navigate = useNavigate()
-
     return (
         <div className={styles.navbar}>
-            <h1
-                style={{ cursor: "pointer" }}
-                onClick={() => navigate('/valantis/')}
-            >Valantis</h1>
+            <Link to="/valantis/" target="_self">
+                <h1>Valantis</h1>
+            </Link>
             <Search />
         </div>
     )

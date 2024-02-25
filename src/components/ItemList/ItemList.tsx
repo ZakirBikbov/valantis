@@ -1,25 +1,35 @@
 import { useEffect } from "react"
+import { useLocation } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../store/store"
-import ItemCard from "../ItemCard/ItemCard"
 import { clear, getIds } from "../../store/item.slice"
-import styles from "./ItemList.module.css"
+import ItemCard from "../ItemCard/ItemCard"
 import PaginationControls from "./PaginationControls/PaginationControls"
+import styles from "./ItemList.module.css"
 
 const ItemList = () => {
     const { itemList, searchText, loading, selectFilterKey } = useAppSelector(store => store.item)
+    const location = useLocation()
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(getIds({
-            newSelectFilterKey: selectFilterKey,
-            newSearchText: searchText,
-            offset: 0
-        }))
+        if (location.pathname === '/valantis/items/') {
+            dispatch(getIds({
+                newSelectFilterKey: selectFilterKey,
+                newSearchText: searchText,
+                offset: 0
+            }))
+        } else {
+            dispatch(getIds({
+                newSelectFilterKey: 'product',
+                newSearchText: '',
+                offset: 0
+            }))
+        }
         return () => {
             dispatch(clear())
         }
-    }, [])
+    }, [location.pathname])
 
     return (
         <>

@@ -37,7 +37,10 @@ export const getIds = createAsyncThunk(
                 params: { offset, limit: PAGE_SIZE }
             })
             await dispatch(getItems(data.result))
+
             dispatch(setOffset(offset))
+            dispatch(setSelectFilterKey('product'))
+            dispatch(setSearchText(''))
 
             return data as { result: string[] }
         } else {

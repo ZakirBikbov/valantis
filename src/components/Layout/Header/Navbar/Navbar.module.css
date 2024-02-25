@@ -4,3 +4,8 @@
     align-items: center;
     padding: 10px 35px;
 }
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+}
