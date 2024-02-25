@@ -16,7 +16,6 @@ const ItemList = () => {
             newSearchText: searchText,
             offset: 0
         }))
-        console.log(searchText.length)
         return () => {
             dispatch(clear())
         }
@@ -29,7 +28,6 @@ const ItemList = () => {
                     <div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                 </div>
                 :
-
                 <div className={styles.itemList}>
                     {searchText.length === 0 && <PaginationControls />}
                     {itemList.map(item => <ItemCard key={item.id} data={item} />)}

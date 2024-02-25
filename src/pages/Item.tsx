@@ -28,9 +28,9 @@ const Item = () => {
                 </div>
                 :
                 <div style={itemData}>
-                    <p><strong>Название:</strong>{` ${itemList[0].product}`}</p>
-                    <p><strong>Брэнд:</strong>{` ${itemList[0].brand}`}</p>
-                    <p><strong>Цена:</strong>{` ${itemList[0].price}`}</p>
+                    <p><strong>Название:</strong>{` ${itemList[0] && itemList[0].product}`}</p>
+                    <p><strong>Брэнд:</strong>{` ${itemList[0] && itemList[0].brand}`}</p>
+                    <p><strong>Цена:</strong>{` ${itemList[0] && itemList[0].price}`}</p>
                 </div>
             }
         </>
