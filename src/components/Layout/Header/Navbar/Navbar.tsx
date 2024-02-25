@@ -11,7 +11,7 @@ const Navbar = () => {
         <div className={styles.navbar}>
             <h1
                 style={{ cursor: "pointer" }}
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/valantis/')}
             >Valantis</h1>
             <Search />
         </div>

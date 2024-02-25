@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/store"
 import styles from "./PaginationControls.module.css"
 
 const PaginationControls = () => {
-    const { offset, searchText } = useAppSelector(store => store.item)
+    const { offset, searchText, selectFilterKey } = useAppSelector(store => store.item)
 
     const dispatch = useAppDispatch()
 
@@ -12,6 +12,7 @@ const PaginationControls = () => {
             <button
                 className={styles.navBtn}
                 onClick={() => dispatch(getIds({
+                    newSelectFilterKey: selectFilterKey,
                     newSearchText: searchText,
                     offset: offset - 50
                 }))}
@@ -19,6 +20,7 @@ const PaginationControls = () => {
             <button
                 className={styles.navBtn}
                 onClick={() => dispatch(getIds({
+                    newSelectFilterKey: selectFilterKey,
                     newSearchText: searchText,
                     offset: offset + 50
                 }))}
