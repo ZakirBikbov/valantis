@@ -79,6 +79,9 @@ export const filter = createAsyncThunk(
 
         await dispatch(getItems(data.result))
 
+        dispatch(setSelectFilterKey(newSelectFilterKey))
+        dispatch(setSearchText(newSearchText))
+
         return data as { result: string[] }
     }
 )

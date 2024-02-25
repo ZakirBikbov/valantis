@@ -16,6 +16,7 @@ const ItemList = () => {
             newSearchText: searchText,
             offset: 0
         }))
+        console.log(searchText.length)
         return () => {
             dispatch(clear())
         }
