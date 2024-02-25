@@ -1,14 +1,14 @@
 import { FormEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../../store/store"
-import { getIds } from "../../../../../store/item.slice";
+import { getIds, setSearchText, setSelectFilterKey } from "../../../../../store/item.slice";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Search.module.css"
 
 const Search = () => {
     const { searchText, selectFilterKey } = useAppSelector(store => store.item)
 
-    const [newSearchText, setNewSearchText] = useState(searchText)
     const [newSelectFilterKey, setNewSelectFilterKey] = useState(selectFilterKey)
+    const [newSearchText, setNewSearchText] = useState(searchText)
 
     const location = useLocation()
     const navigate = useNavigate()
@@ -23,6 +23,8 @@ const Search = () => {
                 offset: 0
             }))
         } else {
+            dispatch(setSelectFilterKey(newSelectFilterKey))
+            dispatch(setSearchText(newSearchText))
             navigate('/valantis/')
         }
     }

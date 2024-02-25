@@ -30,9 +30,9 @@ const ItemList = () => {
                 :
 
                 <div className={styles.itemList}>
-                    {itemList.length > 40 && <PaginationControls />}
+                    {searchText.length === 0 && <PaginationControls />}
                     {itemList.map(item => <ItemCard key={item.id} data={item} />)}
-                    {itemList.length > 40 && <PaginationControls />}
+                    {searchText.length === 0 && <PaginationControls />}
                 </div>
             }
         </>

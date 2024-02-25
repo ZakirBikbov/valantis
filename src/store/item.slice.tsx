@@ -78,8 +78,6 @@ export const filter = createAsyncThunk(
         })
 
         await dispatch(getItems(data.result))
-        dispatch(setOffset(offset))
-        dispatch(setSearchText(newSearchText))
 
         return data as { result: string[] }
     }
@@ -94,6 +92,9 @@ export const itemSlice = createSlice({
         },
         setSearchText(state, action) {
             state.searchText = action.payload
+        },
+        setSelectFilterKey(state, action) {
+            state.selectFilterKey = action.payload
         },
         clear(state) {
             state.idsList = []
@@ -149,4 +150,4 @@ export const itemSlice = createSlice({
         })
 })
 
-export const { setOffset, setSearchText, clear } = itemSlice.actions
+export const { setOffset, setSearchText, setSelectFilterKey, clear } = itemSlice.actions

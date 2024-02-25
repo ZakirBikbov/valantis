@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { getItems } from "../store/item.slice";
+import { clear, getItems } from "../store/item.slice";
 
 const Item = () => {
     const { itemList, loading } = useAppSelector(store => store.item)
@@ -10,8 +10,10 @@ const Item = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        console.log("test")
         dispatch(getItems([params.id] as string[]))
+        return () => {
+            dispatch(clear())
+        }
     }, [])
 
     const itemData: React.CSSProperties = {
