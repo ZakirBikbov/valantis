@@ -16,14 +16,14 @@ const Search = () => {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        if (location.pathname === '/') {
+        if (location.pathname === '/valantis/') {
             dispatch(getIds({
                 newSelectFilterKey,
                 newSearchText,
                 offset: 0
             }))
         } else {
-            navigate('/')
+            navigate('/valantis/')
         }
     }
 

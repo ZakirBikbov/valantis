@@ -8,7 +8,7 @@ const ItemCard: FC<{ data: IItem }> = ({ data }) => {
 
     const navigate = useNavigate()
     return (
-        <div className={styles.itemCard} onClick={() => navigate(`/items/${id}`)}>
+        <div className={styles.itemCard} onClick={() => navigate(`/valantis/items/${id}`)}>
             <p>{id}</p>
             <p>{product}</p>
             <p>{brand}</p>

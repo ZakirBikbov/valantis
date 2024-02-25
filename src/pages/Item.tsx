@@ -10,6 +10,7 @@ const Item = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
+        console.log(params.id)
         dispatch(getItems([params.id] as string[]))
     }, [])
 
