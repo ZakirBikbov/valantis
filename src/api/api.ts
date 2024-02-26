@@ -4,7 +4,6 @@ import md5 from 'md5';
 export const API_URL = 'https://api.valantis.store:41000/';
 
 export const $api = axios.create({
-    withCredentials: true,
     baseURL: API_URL,
 });
 
@@ -14,6 +13,7 @@ function generateAuthString(password: string) {
 }
 
 $api.interceptors.request.use((config) => {
+    config.headers['Access-Control-Allow-Credentials'] = true
     config.headers['X-Auth'] = generateAuthString('Valantis');
     return config;
 });
